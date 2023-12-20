@@ -1,6 +1,7 @@
 import networkx as nx
 import numpy as np
-from collections import deque
+# from collections import deque
+
 
 # Function per verifier se il graph è directed o no
 def is_transpose(adia_matrix):
@@ -16,14 +17,15 @@ def is_transpose(adia_matrix):
 def create_graph(my_matrix):
     if is_transpose(my_matrix):
         my_graph = nx.Graph(my_matrix)
-        toString(True)
+        to_string(True)
     else:
         my_graph = nx.DiGraph(my_matrix)
-        toString(False)
+        to_string(False)
     return my_graph
 
 
-def Bfv(my_graph, my_node):
+# Function per la ricerca di nodo BFV
+def bfv(my_graph, my_node):
     visited = set()
     parents = [dict(my_graph[my_node])]
 
@@ -31,8 +33,6 @@ def Bfv(my_graph, my_node):
         if my_node not in visited:
             visited.add(my_node)
         for element in parents:
-            '''if element == {}:
-                parents.clear()'''
             for i in element:
                 if i not in visited:
                     visited.add(i)
@@ -40,29 +40,12 @@ def Bfv(my_graph, my_node):
         parents.clear()
     return visited
 
-'''def create_dict_edge(my_matrix):
-    node = dict()
-    edge = dict()
-    for i in range(my_matrix.shape[0]):
-        for j in range(my_matrix.shape[1]):
-            if my_matrix[i][j] != 0:
-                node[i] = edge[i, j] + my_matrix[i][j]
-    return edge
 
-def create_node(my_graph):
-    nodes = dict()
-    for element in my_graph:
-        for i in element:
-            if i not in nodes:
-                nodes += i
-                nodes[i] = my_graph[i]
-    print(nodes)'''
-
-
-def toString(bool):
-    if bool: print("Il grafo non è orientato")
-    else: print("Il grafo è orientato")
-# Function per la ricerca di nodo BFS
+def to_string(var):
+    if var:
+        print("Il graph non è orientate")
+    else:
+        print("Il graph è orientate")
 
 
 if __name__ == '__main__':
@@ -77,6 +60,5 @@ if __name__ == '__main__':
     graph3 = create_graph(myMatrix_Oriented2)
 
     # stamp i nodo ed i edge del graph
-    print("Visita del grapho2 in BFV: ", Bfv(graph2, 0))
-    print("Visita del grapho3 in BFV: ", Bfv(graph3, 0))
-
+    print("BFV in graph2: ", bfv(graph2, 0))
+    print("BFV in graph3: ", bfv(graph3, 0))
